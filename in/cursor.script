@@ -15,6 +15,7 @@ go.property("notify_own_gameobject", true)
 
 local COLLISION_RESPONSE = hash("collision_response")
 local INPUT = hash("input")
+local EXECUTE_ACQUIRE_INPUT_FOCUS = hash("execute_acquire_input_focus")
 local EMPTY_FILTER = hash("")
 
 local action_pos = vmath.vector3()
@@ -324,6 +325,9 @@ function on_message(self, message_id, message, sender)
 		start_dragging(self, message.id, message.mode or cursor.DRAG_MODE_FREE)
 	elseif message_id == INPUT then
 		handle_input(self, message.action_id, message.action)
+	elseif message_id == EXECUTE_ACQUIRE_INPUT_FOCUS then
+		msg.post(".", "acquire_input_focus")
+		self.acquire_input_focus = true
 	end
 end
 
